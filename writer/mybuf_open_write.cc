@@ -3,6 +3,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <iostream>
+
 namespace iobench::mybuf_open_write {
 namespace {
 char *write_char(char *buffer, const char value) {
@@ -20,7 +22,7 @@ template <typename Int> char *write_int(char *buffer, Int value) {
   } while (value > 0);
 
   while (pos > 0) {
-    *(buffer++) = rev_buffer[--pos];
+    *(buffer++) = '0' + rev_buffer[--pos];
   }
 
   return buffer;
@@ -29,11 +31,11 @@ template <typename Int> char *write_int(char *buffer, Int value) {
 
 static constexpr int BUF_SIZE = 4 * 1024 * 1024; // 4 Mb
 static constexpr int BUF_SIZE_LIMIT = BUF_SIZE - 1024;
-
 void write_graph(const Graph &graph, const std::string &filename) {
   char buffer[BUF_SIZE];
   char *cur_buffer = buffer;
-  int fd = open(filename.c_str(), O_WRONLY);
+
+  int fd = open(filename.c_str(), O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
 
   auto flush_if_full = [&] {
     const std::size_t len = cur_buffer - buffer;
@@ -58,6 +60,7 @@ void write_graph(const Graph &graph, const std::string &filename) {
     cur_buffer = write_char(cur_buffer, '\n');
   }
 
+  write(fd, buffer, cur_buffer - buffer);
   close(fd);
 }
 } // namespace iobench::mybuf_open_write

@@ -17,7 +17,7 @@ void write_graph(const Graph &graph, const std::string &filename) {
   }
 
   const std::string str = ss.str();
-  int fd = open(filename.c_str(), O_WRONLY);
+  int fd = open(filename.c_str(), O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
   write(fd, str.c_str(), str.length());
   close(fd);
 }
