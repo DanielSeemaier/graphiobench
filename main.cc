@@ -10,6 +10,7 @@
 #include "writer/fopen_fwrite.h"
 #include "writer/fstream_pipeout.h"
 #include "writer/fstream_write.h"
+#include "writer/sstream_open_write.h"
 
 using namespace iobench;
 
@@ -73,7 +74,8 @@ int main(int argc, char *argv[]) {
     std::vector<Writer> writers{{"fstream_pipeout", fstream_pipeout::write},
                                 {"fopen_fputs", fopen_fputs::write},
                                 {"fopen_fwrite", fopen_fwrite::write},
-                                {"fstream_write", fstream_write::write}};
+                                {"fstream_write", fstream_write::write},
+                                {"sstream_open_write", sstream_open_write::write_graph}};
 
     const Graph graph = mmap_toker::read(filename);
 
