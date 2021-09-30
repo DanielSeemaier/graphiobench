@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
                                 {"fopen_fwrite", fopen_fwrite::write}};
 
     const Graph graph = mmap_toker::read(filename);
-    const std::string tmp_filename = "tmp.graph";
+    const std::string tmp_filename = "/data01/seemaier/tmp.graph";
 
     std::cout << "Writing methods:" << std::endl;
 
