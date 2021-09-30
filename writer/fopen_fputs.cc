@@ -42,6 +42,20 @@ template <typename Int> char *write_int(char *buffer, Int value) {
 
   return buffer;
 }
+
+template <typename Int> void write_int_to_file(FILE *fd, Int value) {
+  static char rev_buffer[80];
+
+  int pos = 0;
+  do {
+    rev_buffer[pos++] = value % 10;
+    value /= 10;
+  } while (value > 0);
+
+  while (pos > 0) {
+    fputc('0' + rev_buffer[--pos], fd);
+  }
+}
 } // namespace
 
 void write_graph_my_itoa(const Graph &graph, const std::string &filename) {
@@ -64,6 +78,60 @@ void write_graph_my_itoa(const Graph &graph, const std::string &filename) {
       std::fputs(buffer, fd);
     }
     std::fputs("\n", fd);
+  }
+
+  std::fclose(fd);
+}
+
+void write_graph_my_itoa_largebuf(const Graph &graph, const std::string &filename) {
+  auto fd = std::fopen(filename.c_str(), "w");
+
+  constexpr std::size_t BUF_SIZE = 1024 * 1024 * 4; // 4 Mb
+  char large_buf[BUF_SIZE];
+  std::setvbuf(fd, large_buf, _IOFBF, BUF_SIZE);
+
+  char buffer[80];
+
+  // header
+  *write_int(buffer, graph.n()) = 0;
+  std::fputs(buffer, fd);
+  std::fputs(" ", fd);
+  *write_int(buffer, graph.m() / 2) = 0;
+  std::fputs(buffer, fd);
+  std::fputs("\n", fd);
+
+  // body
+  for (ID u = 0; u < graph.n(); ++u) {
+    for (ID e = graph.nodes[u]; e < graph.nodes[u + 1]; ++e) {
+      *write_char(write_int(buffer, graph.edges[e] + 1), ' ') = 0;
+      std::fputs(buffer, fd);
+    }
+    std::fputs("\n", fd);
+  }
+
+  std::fclose(fd);
+}
+
+void write_graph_my_itoa_largebuf_direct(const Graph &graph, const std::string &filename) {
+  auto fd = std::fopen(filename.c_str(), "w");
+
+  constexpr std::size_t BUF_SIZE = 1024 * 1024 * 4; // 4 Mb
+  char large_buf[BUF_SIZE];
+  std::setvbuf(fd, large_buf, _IOFBF, BUF_SIZE);
+
+  // header
+  write_int_to_file(fd, graph.n());
+  std::fputc(' ', fd);
+  write_int_to_file(fd, graph.m() / 2);
+  std::fputc('\n', fd);
+
+  // body
+  for (ID u = 0; u < graph.n(); ++u) {
+    for (ID e = graph.nodes[u]; e < graph.nodes[u + 1]; ++e) {
+      write_int_to_file(fd, graph.edges[e] + 1);
+      std::fputc(' ', fd);
+    }
+    std::fputc('\n', fd);
   }
 
   std::fclose(fd);
