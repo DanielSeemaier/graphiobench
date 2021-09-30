@@ -8,6 +8,7 @@
 #include "mmap_toker.h"
 #include "use_graph.h"
 #include "fopen_fwrite.h"
+#include "fstream_write.h"
 
 using namespace iobench;
 
@@ -69,23 +70,24 @@ int main(int argc, char *argv[]) {
   if (WRITE_BENCHMARK) {
     std::vector<Writer> writers{{"fstream_sstream_getline", fstream_sstream_getline::write},
                                 {"fopen_fputs", fopen_fputs::write},
-                                {"fopen_fwrite", fopen_fwrite::write}};
+                                {"fopen_fwrite", fopen_fwrite::write},
+                                {"fstream_write", fstream_write::write}};
 
     const Graph graph = mmap_toker::read(filename);
-    const std::string tmp_filename = "/data01/seemaier/tmp.graph";
+    const std::string tmp_directory = "/data01/seemaier/";
 
     std::cout << "Writing methods:" << std::endl;
 
     for (const auto &writer : writers) {
       // warmup reps
       for (int it = 0; it < WARMUP_REPS; ++it) {
-        writer.func(graph, tmp_filename);
+        writer.func(graph, tmp_directory + "." + writer.name + ".warmup." + std::to_string(it));
       }
 
       // benchmark
       const auto begin = std::chrono::steady_clock::now();
       for (int it = 0; it < WRITE_REPS; ++it) {
-        writer.func(graph, tmp_filename);
+        writer.func(graph, tmp_directory + "." + writer.name + "." + std::to_string(it));
       }
       const auto end = std::chrono::steady_clock::now();
       const auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();

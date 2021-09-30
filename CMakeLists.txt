@@ -14,6 +14,8 @@ set(SOURCE_FILES
         fopen_fputs.h
         fopen_fwrite.cc
         fopen_fwrite.h
+        fstream_write.cc
+        fstream_write.h
         fstream_sstream_getline.cc
         fstream_sstream_getline.h)
 
