@@ -21,7 +21,9 @@ set(SOURCE_FILES
         writer/fstream_pipeout.cc
         writer/fstream_pipeout.h
         writer/sstream_open_write.cc
-        writer/sstream_open_write.h)
+        writer/sstream_open_write.h
+        writer/mybuf_open_write.cc
+        writer/mybuf_open_write.h)
 
 add_executable(graphiobench ${SOURCE_FILES})
 target_include_directories(graphiobench PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

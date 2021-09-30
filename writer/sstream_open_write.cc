@@ -1,4 +1,4 @@
-#include "sstream_open_write.h"
+#include "writer/sstream_open_write.h"
 
 #include <fcntl.h>
 #include <unistd.h>
