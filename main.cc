@@ -16,10 +16,10 @@
 using namespace iobench;
 
 constexpr static int WARMUP_REPS = 2;
-constexpr static bool READ_BENCHMARK = false;
-constexpr static int READ_REPS = 3;
+constexpr static bool READ_BENCHMARK = true;
+constexpr static int READ_REPS = 5;
 constexpr static bool WRITE_BENCHMARK = true;
-constexpr static int WRITE_REPS = 3;
+constexpr static int WRITE_REPS = 5;
 constexpr static bool WRITE_BACK = false;
 
 struct Reader {
@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
         use_graph(graph);
       }
       const auto end = std::chrono::steady_clock::now();
-      const auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+      const auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() / READ_REPS;
 
       std::cout << "- " << reader.name << ": " << time << " ms" << std::endl;
     }
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
         writer.func(graph, output_dir + "/" + writer.name + "." + std::to_string(it));
       }
       const auto end = std::chrono::steady_clock::now();
-      const auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+      const auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() / WRITE_REPS;
 
       std::cout << "- " << writer.name << ": " << time << " ms" << std::endl;
     }

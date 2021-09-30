@@ -31,6 +31,7 @@ template <typename Int> char *write_int(char *buffer, Int value) {
 
 static constexpr int BUF_SIZE = 4 * 1024 * 1024; // 4 Mb
 static constexpr int BUF_SIZE_LIMIT = BUF_SIZE - 1024;
+
 void write_graph(const Graph &graph, const std::string &filename) {
   char buffer[BUF_SIZE];
   char *cur_buffer = buffer;
