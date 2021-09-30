@@ -3,7 +3,7 @@
 #include <cstdio>
 
 namespace iobench::fopen_fputs {
-void write(const Graph &graph, const std::string &filename) {
+void write_graph_to_string(const Graph &graph, const std::string &filename) {
   auto fd = std::fopen(filename.c_str(), "w");
 
   const std::string header = std::to_string(graph.n()) + ' ' + std::to_string(graph.m() / 2) + '\n';
@@ -44,21 +44,24 @@ template <typename Int> char *write_int(char *buffer, Int value) {
 }
 } // namespace
 
-void write_my_itoa(const Graph &graph, const std::string &filename) {
+void write_graph_my_itoa(const Graph &graph, const std::string &filename) {
   auto fd = std::fopen(filename.c_str(), "w");
 
-  const std::string header = std::to_string(graph.n()) + ' ' + std::to_string(graph.m() / 2) + '\n';
-  std::fputs(header.c_str(), fd);
+  char buffer[80];
 
-  char itoa_buffer[80];
+  // header
+  *write_int(buffer, graph.n()) = 0;
+  std::fputs(buffer, fd);
+  std::fputs(" ", fd);
+  *write_int(buffer, graph.m() / 2) = 0;
+  std::fputs(buffer, fd);
+  std::fputs("\n", fd);
 
+  // body
   for (ID u = 0; u < graph.n(); ++u) {
     for (ID e = graph.nodes[u]; e < graph.nodes[u + 1]; ++e) {
-      const ID v = graph.edges[e] + 1;
-      char *after_num = write_int(itoa_buffer, v);
-      after_num = write_char(after_num, ' ');
-      write_char(after_num, 0);
-      std::fputs(itoa_buffer, fd);
+      *write_char(write_int(buffer, graph.edges[e] + 1), ' ') = 0;
+      std::fputs(buffer, fd);
     }
     std::fputs("\n", fd);
   }
