@@ -12,6 +12,8 @@ set(SOURCE_FILES
         mmap_toker.h
         fopen_fputs.cc
         fopen_fputs.h
+        fopen_fwrite.cc
+        fopen_fwrite.h
         fstream_sstream_getline.cc
         fstream_sstream_getline.h)
 

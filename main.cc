@@ -7,6 +7,7 @@
 #include "fstream_sstream_getline.h"
 #include "mmap_toker.h"
 #include "use_graph.h"
+#include "fopen_fwrite.h"
 
 using namespace iobench;
 
@@ -67,7 +68,8 @@ int main(int argc, char *argv[]) {
 
   if (WRITE_BENCHMARK) {
     std::vector<Writer> writers{{"fstream_sstream_getline", fstream_sstream_getline::write},
-                                {"fopen_fputs", fopen_fputs::write}};
+                                {"fopen_fputs", fopen_fputs::write},
+                                {"fopen_fwrite", fopen_fwrite::write}};
 
     const Graph graph = mmap_toker::read(filename);
     const std::string tmp_filename = "tmp.graph";
