@@ -8,15 +8,18 @@ set(SOURCE_FILES
         graph.h
         use_graph.cc
         use_graph.h
-        mmap_toker.cc
-        mmap_toker.h
-        fopen_fputs.cc
-        fopen_fputs.h
-        fopen_fwrite.cc
-        fopen_fwrite.h
-        fstream_write.cc
-        fstream_write.h
-        fstream_sstream_getline.cc
-        fstream_sstream_getline.h)
+        reader/mmap_toker.cc
+        reader/mmap_toker.h
+        reader/fstream_sstream_getline.cc
+        reader/fstream_sstream_getline.h
+        writer/fopen_fputs.cc
+        writer/fopen_fputs.h
+        writer/fopen_fwrite.cc
+        writer/fopen_fwrite.h
+        writer/fstream_write.cc
+        writer/fstream_write.h
+        writer/fstream_pipeout.cc
+        writer/fstream_pipeout.h)
 
 add_executable(graphiobench ${SOURCE_FILES})
+target_include_directories(graphiobench PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
