@@ -81,13 +81,13 @@ int main(int argc, char *argv[]) {
     for (const auto &writer : writers) {
       // warmup reps
       for (int it = 0; it < WARMUP_REPS; ++it) {
-        writer.func(graph, tmp_directory + "." + writer.name + ".warmup." + std::to_string(it));
+        writer.func(graph, tmp_directory + writer.name + ".warmup." + std::to_string(it));
       }
 
       // benchmark
       const auto begin = std::chrono::steady_clock::now();
       for (int it = 0; it < WRITE_REPS; ++it) {
-        writer.func(graph, tmp_directory + "." + writer.name + "." + std::to_string(it));
+        writer.func(graph, tmp_directory + writer.name + "." + std::to_string(it));
       }
       const auto end = std::chrono::steady_clock::now();
       const auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
