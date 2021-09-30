@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
 
   if (WRITE_BENCHMARK) {
     std::vector<Writer> writers{{"mybuf_open_write", mybuf_open_write::write_graph},
+                                {"fopen_fputs_my_itoa", fopen_fputs::write_my_itoa},
                                 {"fstream_pipeout", fstream_pipeout::write},
                                 {"fopen_fputs", fopen_fputs::write},
                                 {"fopen_fwrite", fopen_fwrite::write},
