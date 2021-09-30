@@ -86,8 +86,7 @@ int main(int argc, char *argv[]) {
     for (const auto &writer : writers) {
       // warmup reps
       for (int it = 0; it < WARMUP_REPS; ++it) {
-        std::string out_filename = output_dir + "/" + writer.name + ".warmup." + std::to_string(it);
-        std::cout << "\t ... " << out_filename << std::endl;
+        const std::string out_filename = output_dir + "/" + writer.name + ".warmup." + std::to_string(it);
         writer.func(graph, out_filename);
       }
 
