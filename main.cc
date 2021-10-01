@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     for (const auto &reader : readers) {
       if (WRITE_BACK) {
         Graph graph = reader.func(filename);
-        write_mybuf_open_write(graph, filename + "." + reader.name);
+        write_mybuf_open_write_4MB(graph, filename + "." + reader.name);
       }
 
       // warmup reads
@@ -72,15 +72,21 @@ int main(int argc, char *argv[]) {
   }
 
   if (WRITE_BENCHMARK) {
-    std::vector<Writer> writers{{"mybuf_open_write", write_mybuf_open_write},
-                                {"fopen_fputc_my_itoa_largebuf", write_fopen_fputc_my_itoa_largebuf},
-                                {"fopen_fputs_my_itoa_largebuf", write_fopen_fputs_my_itoa_largebuf},
-                                {"fopen_fputs_my_itoa", write_fopen_fputs_my_itoa},
-                                {"fopen_fputs_to_string", write_fopen_fputs_to_string},
-                                {"fstream_pipeout", write_fstream_pipeout},
-                                {"fopen_fprintf", write_fopen_fprintf},
-                                {"fstream_write", write_fstream_write},
-                                {"sstream_open_write", write_sstream_open_write}};
+    std::vector<Writer> writers{
+        {"mybuf_open_write_64KB", write_mybuf_open_write_64KB},
+        {"mybuf_open_write_1MB", write_mybuf_open_write_1MB},
+        {"mybuf_open_write_4MB", write_mybuf_open_write_4MB},
+        {"mybuf_open_write_fadvice_seq", write_mybuf_open_write_4MB_fadvice},
+        {"mybuf_open_write_16MB", write_mybuf_open_write_16MB},
+        {"fopen_fputc_my_itoa_largebuf", write_fopen_fputc_my_itoa_largebuf},
+        {"fopen_fputs_my_itoa_largebuf", write_fopen_fputs_my_itoa_largebuf},
+        {"fopen_fputs_my_itoa", write_fopen_fputs_my_itoa},
+        {"fopen_fputs_to_string", write_fopen_fputs_to_string},
+        {"fstream_pipeout", write_fstream_pipeout},
+        {"fopen_fprintf", write_fopen_fprintf},
+        {"fstream_write", write_fstream_write},
+        {"sstream_open_write", write_sstream_open_write},
+    };
 
     const Graph graph = read_mmap_toker(filename);
 

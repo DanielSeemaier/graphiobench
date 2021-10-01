@@ -25,16 +25,17 @@ template <typename Int> char *write_int(char *buffer, Int value) {
 
   return buffer;
 }
-} // namespace
 
-static constexpr int BUF_SIZE = 4 * 1024 * 1024; // 4 Mb
-static constexpr int BUF_SIZE_LIMIT = BUF_SIZE - 1024;
+template <int BUF_SIZE, int advice = -1> void write_mybuf_open_write(const Graph &graph, const std::string &filename) {
+  constexpr int BUF_SIZE_LIMIT = BUF_SIZE - 1024;
 
-void write_mybuf_open_write(const Graph &graph, const std::string &filename) {
   char buffer[BUF_SIZE];
   char *cur_buffer = buffer;
 
   int fd = open(filename.c_str(), O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+  if (advice >= 0) {
+    posix_fadvise(fd, 0, 0, advice);
+  }
 
   auto flush_if_full = [&] {
     const std::size_t len = cur_buffer - buffer;
@@ -61,5 +62,26 @@ void write_mybuf_open_write(const Graph &graph, const std::string &filename) {
 
   write(fd, buffer, cur_buffer - buffer);
   close(fd);
+}
+} // namespace
+
+void write_mybuf_open_write_64KB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<64 * 1024>(graph, filename);
+}
+
+void write_mybuf_open_write_1MB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<1024 * 1024>(graph, filename);
+}
+
+void write_mybuf_open_write_4MB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<4 * 1024 * 1024>(graph, filename);
+}
+
+void write_mybuf_open_write_4MB_fadvice(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<4 * 1024 * 1024, POSIX_FADV_SEQUENTIAL>(graph, filename);
+}
+
+void write_mybuf_open_write_16MB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<16 * 1024 * 1024>(graph, filename);
 }
 } // namespace iobench
