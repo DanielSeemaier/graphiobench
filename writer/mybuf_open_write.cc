@@ -84,8 +84,4 @@ void write_mybuf_open_write_4MB(const Graph &graph, const std::string &filename)
 void write_mybuf_open_write_4MB_fadvice(const Graph &graph, const std::string &filename) {
   write_mybuf_open_write<4 * 1024 * 1024, POSIX_FADV_SEQUENTIAL>(graph, filename);
 }
-
-void write_mybuf_open_write_16MB(const Graph &graph, const std::string &filename) {
-  write_mybuf_open_write<16 * 1024 * 1024>(graph, filename);
-}
 } // namespace iobench

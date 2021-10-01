@@ -78,7 +78,6 @@ int main(int argc, char *argv[]) {
         {"mybuf_open_write_1MB", write_mybuf_open_write_1MB},
         {"mybuf_open_write_4MB", write_mybuf_open_write_4MB},
         {"mybuf_open_write_fadvice_seq", write_mybuf_open_write_4MB_fadvice},
-        {"mybuf_open_write_16MB", write_mybuf_open_write_16MB},
         {"fopen_fputc_my_itoa_largebuf", write_fopen_fputc_my_itoa_largebuf},
         {"fopen_fputs_my_itoa_largebuf", write_fopen_fputs_my_itoa_largebuf},
         {"fopen_fputs_my_itoa", write_fopen_fputs_my_itoa},
