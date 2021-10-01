@@ -65,6 +65,10 @@ template <int BUF_SIZE, int advice = -1> void write_mybuf_open_write(const Graph
 }
 } // namespace
 
+void write_mybuf_open_write_16KB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<16 * 1024>(graph, filename);
+}
+
 void write_mybuf_open_write_64KB(const Graph &graph, const std::string &filename) {
   write_mybuf_open_write<64 * 1024>(graph, filename);
 }

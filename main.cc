@@ -16,7 +16,7 @@
 using namespace iobench;
 
 constexpr static int WARMUP_REPS = 2;
-constexpr static bool READ_BENCHMARK = true;
+constexpr static bool READ_BENCHMARK = false;
 constexpr static int READ_REPS = 5;
 constexpr static bool WRITE_BENCHMARK = true;
 constexpr static int WRITE_REPS = 5;
@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
 
   if (WRITE_BENCHMARK) {
     std::vector<Writer> writers{
+        {"mybuf_open_write_16KB", write_mybuf_open_write_16KB},
         {"mybuf_open_write_64KB", write_mybuf_open_write_64KB},
         {"mybuf_open_write_1MB", write_mybuf_open_write_1MB},
         {"mybuf_open_write_4MB", write_mybuf_open_write_4MB},
