@@ -5,5 +5,5 @@
 #include <string>
 
 namespace iobench {
-void write_fstream_write(const Graph &graph, const std::string &filename);
+void write_fopen_fprintf(const Graph &graph, const std::string &filename);
 } // namespace iobench

@@ -2,8 +2,8 @@
 
 #include <fstream>
 
-namespace iobench::fstream_write {
-void write(const Graph &graph, const std::string &filename) {
+namespace iobench {
+void write_fstream_write(const Graph &graph, const std::string &filename) {
   std::ofstream out(filename);
 
   const std::string header = std::to_string(graph.n()) + ' ' + std::to_string(graph.m() / 2) + '\n';
@@ -18,4 +18,4 @@ void write(const Graph &graph, const std::string &filename) {
     out.write("\n", 1);
   }
 }
-} // namespace iobench::fstream_write
+} // namespace iobench

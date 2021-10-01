@@ -6,8 +6,8 @@
 #include "reader/fstream_sstream_getline.h"
 #include "reader/mmap_toker.h"
 #include "use_graph.h"
+#include "writer/fopen_fprintf.h"
 #include "writer/fopen_fputs.h"
-#include "writer/fopen_fwrite.h"
 #include "writer/fstream_pipeout.h"
 #include "writer/fstream_write.h"
 #include "writer/mybuf_open_write.h"
@@ -41,15 +41,15 @@ int main(int argc, char *argv[]) {
   const std::string output_dir = (argc >= 3) ? argv[2] : ".";
 
   if (READ_BENCHMARK) {
-    std::vector<Reader> readers{{"fstream_sstream_getline", fstream_sstream_getline::read},
-                                {"mmap_toker", mmap_toker::read}};
+    std::vector<Reader> readers{{"fstream_sstream_getline", read_fstream_sstream_getline},
+                                {"mmap_toker", read_mmap_toker}};
 
     std::cout << "Reading methods:" << std::endl;
 
     for (const auto &reader : readers) {
       if (WRITE_BACK) {
         Graph graph = reader.func(filename);
-        fstream_sstream_getline::write(graph, filename + "." + reader.name);
+        write_mybuf_open_write(graph, filename + "." + reader.name);
       }
 
       // warmup reads
@@ -72,17 +72,17 @@ int main(int argc, char *argv[]) {
   }
 
   if (WRITE_BENCHMARK) {
-    std::vector<Writer> writers{{"mybuf_open_write", mybuf_open_write::write_graph},
-                                {"write_graph_my_itoa_largebuf", fopen_fputs::write_graph_my_itoa_largebuf},
-                                {"write_graph_my_itoa_largebuf_direct", fopen_fputs::write_graph_my_itoa_largebuf_direct},
-                                {"fopen_fputs_my_itoa", fopen_fputs::write_graph_my_itoa},
-                                {"fopen_fputs_to_string", fopen_fputs::write_graph_to_string},
-                                {"fstream_pipeout", fstream_pipeout::write},
-                                {"fopen_fwrite", fopen_fwrite::write},
-                                {"fstream_write", fstream_write::write},
-                                {"sstream_open_write", sstream_open_write::write_graph}};
+    std::vector<Writer> writers{{"mybuf_open_write", write_mybuf_open_write},
+                                {"fopen_fputc_my_itoa_largebuf", write_fopen_fputc_my_itoa_largebuf},
+                                {"fopen_fputs_my_itoa_largebuf", write_fopen_fputs_my_itoa_largebuf},
+                                {"fopen_fputs_my_itoa", write_fopen_fputs_my_itoa},
+                                {"fopen_fputs_to_string", write_fopen_fputs_to_string},
+                                {"fstream_pipeout", write_fstream_pipeout},
+                                {"fopen_fprintf", write_fopen_fprintf},
+                                {"fstream_write", write_fstream_write},
+                                {"sstream_open_write", write_sstream_open_write}};
 
-    const Graph graph = mmap_toker::read(filename);
+    const Graph graph = read_mmap_toker(filename);
 
     std::cout << "Writing methods:" << std::endl;
 

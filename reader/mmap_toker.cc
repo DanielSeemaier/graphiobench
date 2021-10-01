@@ -10,7 +10,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-namespace iobench::mmap_toker {
+namespace iobench {
 namespace {
 struct MappedFile {
   const int fd;
@@ -70,7 +70,7 @@ template <typename Int> inline Int scan_int(MappedFile &mapped_file) {
 }
 } // namespace
 
-Graph read(const std::string &filename) {
+Graph read_mmap_toker(const std::string &filename) {
   auto file = mmap_file_from_disk(filename);
   skip_spaces(file);
 
@@ -97,4 +97,4 @@ Graph read(const std::string &filename) {
   munmap_file_from_disk(file);
   return graph;
 }
-} // namespace iobench::mmap_toker
+} // namespace iobench

@@ -4,8 +4,8 @@
 #include <sstream>
 #include <utility>
 
-namespace iobench::fstream_sstream_getline {
-Graph read(const std::string &filename) {
+namespace iobench {
+Graph read_fstream_sstream_getline(const std::string &filename) {
   std::ifstream in(filename);
 
   // read n, m
@@ -35,4 +35,4 @@ Graph read(const std::string &filename) {
 
   return graph;
 }
-} // namespace iobench::fstream_sstream_getline
+} // namespace iobench

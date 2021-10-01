@@ -4,9 +4,9 @@
 
 #include <string>
 
-namespace iobench::fopen_fputs {
-void write_graph_to_string(const Graph &graph, const std::string &filename);
-void write_graph_my_itoa(const Graph &graph, const std::string &filename);
-void write_graph_my_itoa_largebuf(const Graph &graph, const std::string &filename);
-void write_graph_my_itoa_largebuf_direct(const Graph &graph, const std::string &filename);
-}
+namespace iobench {
+void write_fopen_fputs_to_string(const Graph &graph, const std::string &filename);
+void write_fopen_fputs_my_itoa(const Graph &graph, const std::string &filename);
+void write_fopen_fputs_my_itoa_largebuf(const Graph &graph, const std::string &filename);
+void write_fopen_fputc_my_itoa_largebuf(const Graph &graph, const std::string &filename);
+} // namespace iobench

@@ -4,6 +4,6 @@
 
 #include <string>
 
-namespace iobench::sstream_open_write {
-void write_graph(const Graph &graph, const std::string &filename);
-} // namespace iobench::sstream_open_write
+namespace iobench {
+void write_sstream_open_write(const Graph &graph, const std::string &filename);
+} // namespace iobench

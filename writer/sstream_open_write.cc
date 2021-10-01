@@ -5,8 +5,8 @@
 
 #include <sstream>
 
-namespace iobench::sstream_open_write {
-void write_graph(const Graph &graph, const std::string &filename) {
+namespace iobench {
+void write_sstream_open_write(const Graph &graph, const std::string &filename) {
   std::stringstream ss;
   ss << graph.n() << ' ' << graph.m() / 2 << '\n';
   for (ID u = 0; u < graph.n(); ++u) {
@@ -21,4 +21,4 @@ void write_graph(const Graph &graph, const std::string &filename) {
   write(fd, str.c_str(), str.length());
   close(fd);
 }
-} // namespace iobench::sstream_open_write
+} // namespace iobench

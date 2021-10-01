@@ -4,7 +4,6 @@
 
 #include <string>
 
-namespace iobench::fstream_sstream_getline {
-Graph read(const std::string &filename);
-void write(const Graph &graph, const std::string &filename);
-} // namespace iobench::fstream_sstream_getline
+namespace iobench {
+Graph read_fstream_sstream_getline(const std::string &filename);
+} // namespace iobench

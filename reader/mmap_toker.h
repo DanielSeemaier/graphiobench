@@ -4,6 +4,6 @@
 
 #include <string>
 
-namespace iobench::mmap_toker {
-Graph read(const std::string &filename);
-} // namespace iobench::mmap_toker
+namespace iobench {
+Graph read_mmap_toker(const std::string &filename);
+} // namespace iobench
