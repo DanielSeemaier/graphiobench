@@ -76,6 +76,7 @@ int main(int argc, char *argv[]) {
         {"mybuf_open_write_16KB", write_mybuf_open_write_16KB},
         {"mybuf_open_write_4MB", write_mybuf_open_write_4MB},
         {"string_fstream_pipeout", write_graph_string},
+        {"sstream_open_write", write_sstream_open_write},
         {"fopen_fputc_my_itoa_largebuf", write_fopen_fputc_my_itoa_largebuf},
         {"fopen_fputs_my_itoa_largebuf", write_fopen_fputs_my_itoa_largebuf},
         {"fopen_fputs_my_itoa", write_fopen_fputs_my_itoa},
@@ -83,7 +84,6 @@ int main(int argc, char *argv[]) {
         {"fstream_pipeout", write_fstream_pipeout},
         {"fopen_fprintf", write_fopen_fprintf},
         {"fstream_write", write_fstream_write},
-        {"sstream_open_write", write_sstream_open_write},
     };
 
     const Graph graph = read_mmap_toker(filename);
