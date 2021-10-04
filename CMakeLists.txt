@@ -14,8 +14,8 @@ set(SOURCE_FILES
         reader/fstream_sstream_getline.h
         writer/fopen_fputs.cc
         writer/fopen_fputs.h
-        writer/fopen_fwrite.cc
-        writer/fopen_fwrite.h
+        writer/fopen_fprintf.cc
+        writer/fopen_fprintf.h
         writer/fstream_write.cc
         writer/fstream_write.h
         writer/fstream_pipeout.cc

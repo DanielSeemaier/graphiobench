@@ -1,9 +1,9 @@
-#include "writer/fopen_fwrite.h"
+#include "writer/fopen_fprintf.h"
 
 #include <cstdio>
 
-namespace iobench::fopen_fwrite {
-void write(const Graph &graph, const std::string &filename) {
+namespace iobench {
+void write_fopen_fprintf(const Graph &graph, const std::string &filename) {
   auto fd = std::fopen(filename.c_str(), "w");
 
   std::fprintf(fd, "%d %d\n", graph.n(), graph.m() / 2);
@@ -17,4 +17,4 @@ void write(const Graph &graph, const std::string &filename) {
 
   std::fclose(fd);
 }
-} // namespace iobench::fopen_fwrite
+} // namespace iobench

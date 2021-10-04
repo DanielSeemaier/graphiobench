@@ -3,9 +3,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include <iostream>
-
-namespace iobench::mybuf_open_write {
+namespace iobench {
 namespace {
 char *write_char(char *buffer, const char value) {
   *buffer = value;
@@ -27,12 +25,10 @@ template <typename Int> char *write_int(char *buffer, Int value) {
 
   return buffer;
 }
-} // namespace
 
-static constexpr int BUF_SIZE = 4 * 1024 * 1024; // 4 Mb
-static constexpr int BUF_SIZE_LIMIT = BUF_SIZE - 1024;
+template <int BUF_SIZE> void write_mybuf_open_write(const Graph &graph, const std::string &filename) {
+  constexpr int BUF_SIZE_LIMIT = BUF_SIZE - 1024;
 
-void write_graph(const Graph &graph, const std::string &filename) {
   char buffer[BUF_SIZE];
   char *cur_buffer = buffer;
 
@@ -64,4 +60,21 @@ void write_graph(const Graph &graph, const std::string &filename) {
   write(fd, buffer, cur_buffer - buffer);
   close(fd);
 }
-} // namespace iobench::mybuf_open_write
+} // namespace
+
+void write_mybuf_open_write_16KB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<16 * 1024>(graph, filename);
+}
+
+void write_mybuf_open_write_64KB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<64 * 1024>(graph, filename);
+}
+
+void write_mybuf_open_write_1MB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<1024 * 1024>(graph, filename);
+}
+
+void write_mybuf_open_write_4MB(const Graph &graph, const std::string &filename) {
+  write_mybuf_open_write<4 * 1024 * 1024>(graph, filename);
+}
+} // namespace iobench

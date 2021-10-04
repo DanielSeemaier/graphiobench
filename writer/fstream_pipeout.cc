@@ -2,8 +2,8 @@
 
 #include <fstream>
 
-namespace iobench::fstream_pipeout {
-void write(const Graph &graph, const std::string &filename) {
+namespace iobench {
+void write_fstream_pipeout(const Graph &graph, const std::string &filename) {
   std::ofstream out(filename, std::ios_base::out);
   out << graph.n() << ' ' << graph.m() / 2 << '\n';
   for (ID u = 0; u < graph.n(); ++u) {
@@ -13,4 +13,4 @@ void write(const Graph &graph, const std::string &filename) {
     out << '\n';
   }
 }
-} // namespace iobench::fstream_pipeout
+} // namespace iobench
